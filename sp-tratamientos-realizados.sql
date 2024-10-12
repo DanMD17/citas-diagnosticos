@@ -5,10 +5,12 @@ CREATE PROCEDURE spInsertTratamientoRealizado(
     IN p_trata_descripcion VARCHAR(200), 
     IN p_trata_fecha DATE, 
     IN p_trata_observaciones TEXT, 
-    IN p_cita_id INT
+    IN p_cita_id INT,
+    IN p_hist_id INT,
+    IN p_aux_id INT
 )
 BEGIN
-    INSERT INTO tbl_tratamientos_realizados (trata_nombre, trata_descripcion, trata_fecha, trata_observaciones, tbl_citas_cita_id)
+    INSERT INTO tbl_tratamientos_realizados (trata_nombre, trata_descripcion, trata_fecha, trata_observaciones, tbl_citas_cita_id, tbl_historialclinico_hist_id, tbl_auxiliares_aux_id)
     VALUES (p_trata_nombre, p_trata_descripcion, p_trata_fecha, p_trata_observaciones, p_cita_id);
 END $$
 DELIMITER ;
