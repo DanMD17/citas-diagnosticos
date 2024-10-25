@@ -56,3 +56,12 @@ BEGIN
     WHERE hist_id = p_hist_id;
 END//
 DELIMITER ;
+
+-- Drop Down List
+DELIMITER //
+CREATE PROCEDURE spSelectClinicalHistoriesDDL()
+BEGIN
+    SELECT hist_id, hist_descripcion_general
+    FROM tbl_historialclinico;
+END//
+DELIMITER ;
