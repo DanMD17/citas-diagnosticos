@@ -69,3 +69,12 @@ BEGIN
     WHERE emp_id = p_emp_id;
 END//
 DELIMITER ;
+
+-- Drop Down List
+DELIMITER //
+CREATE PROCEDURE spSelectEmployeesDDL()
+BEGIN
+    SELECT emp_id, emp_nombre
+    FROM tbl_empleados;
+END//
+DELIMITER ;

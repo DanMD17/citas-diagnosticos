@@ -65,3 +65,12 @@ BEGIN
     WHERE cita_id = p_cita_id;
 END//
 DELIMITER ;
+
+-- Drop Down List
+DELIMITER //
+CREATE PROCEDURE spSelectQuotesDDL()
+BEGIN
+    SELECT cita_id, cita_estado
+    FROM tbl_citas;
+END//
+DELIMITER ;

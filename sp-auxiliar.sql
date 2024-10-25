@@ -55,3 +55,12 @@ BEGIN
     WHERE aux_id = p_aux_id;
 END//
 DELIMITER ;
+
+-- Drop Down List
+DELIMITER //
+CREATE PROCEDURE spSelectAssistantsDDL()
+BEGIN
+    SELECT aux_id, aux_funcion
+    FROM tbl_auxiliares;
+END//
+DELIMITER ;

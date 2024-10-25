@@ -71,3 +71,13 @@ BEGIN
     DELETE FROM tbl_tratamientos_realizados WHERE trata_id = p_trata_id;
 END//
 DELIMITER ;
+
+-- Drop Down List
+DELIMITER //
+CREATE PROCEDURE spSelectTreatmentsDDL()
+BEGIN
+    SELECT trata_id, trata_nombre
+    FROM tbl_tratamientos_realizados;
+END//
+DELIMITER ;
+

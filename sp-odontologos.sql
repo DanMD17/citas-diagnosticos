@@ -39,3 +39,12 @@ BEGIN
     DELETE FROM tbl_odontologos WHERE odo_id = p_odo_id;
 END $$
 DELIMITER ;
+
+-- Drop Down List
+DELIMITER $$
+CREATE PROCEDURE spSelectDentistsDDL()
+BEGIN
+    SELECT odo_id, odo_especialidad
+    FROM tbl_odontologos;
+END $$
+DELIMITER ;

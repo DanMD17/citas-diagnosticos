@@ -62,3 +62,12 @@ BEGIN
     DELETE FROM tbl_pacientes WHERE paci_id = p_paciente_id;
 END $$
 DELIMITER ;
+
+-- Drop Down List
+DELIMITER $$
+CREATE PROCEDURE spSelectPatientsDDL()
+BEGIN
+    SELECT paci_id, paci_nombre
+    FROM tbl_pacientes;
+END $$
+DELIMITER ;
