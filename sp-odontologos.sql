@@ -1,6 +1,6 @@
 -- Insertar un nuevo odontólogo
 DELIMITER $$
-CREATE PROCEDURE spInsertOdontologo(
+CREATE PROCEDURE spInsertDentist(
     IN p_odo_especialidad VARCHAR(100), 
     IN p_emp_id INT
 )
@@ -12,7 +12,7 @@ DELIMITER ;
 
 -- Leer todos los odontólogos
 DELIMITER $$
-CREATE PROCEDURE spSelectOdontologo()
+CREATE PROCEDURE spSelectDentists()
 BEGIN
     SELECT * FROM tbl_odontologos;
 END $$
@@ -20,7 +20,7 @@ DELIMITER ;
 
 -- Actualizar un odontólogo
 DELIMITER $$
-CREATE PROCEDURE spUpdateOdontologo(
+CREATE PROCEDURE spUpdateDentist(
     IN p_odo_id INT, 
     IN p_odo_especialidad VARCHAR(100), 
     IN p_emp_id INT
@@ -34,7 +34,7 @@ DELIMITER ;
 
 -- Eliminar un odontólogo
 DELIMITER $$
-CREATE PROCEDURE spDeleteOdontologo(IN p_odo_id INT)
+CREATE PROCEDURE spDeleteDentist(IN p_odo_id INT)
 BEGIN
     DELETE FROM tbl_odontologos WHERE odo_id = p_odo_id;
 END $$

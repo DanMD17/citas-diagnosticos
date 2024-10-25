@@ -1,49 +1,73 @@
 -- Insertar un nuevo tratamiento realizado
-DELIMITER $$
-CREATE PROCEDURE spInsertTratamientoRealizado(
+DELIMITER //
+CREATE PROCEDURE spInsertTreatmentPerformed(
     IN p_trata_nombre VARCHAR(45), 
     IN p_trata_descripcion VARCHAR(200), 
     IN p_trata_fecha DATE, 
-    IN p_trata_observaciones TEXT, 
-    IN p_cita_id INT,
-    IN p_hist_id INT,
-    IN p_aux_id INT
+    IN p_trata_observaciones TEXT,
+    IN p_trata_cita_id INT,
+    IN p_trata_hist_id INT,
+    IN p_trata_aux_id INT
 )
 BEGIN
-    INSERT INTO tbl_tratamientos_realizados (trata_nombre, trata_descripcion, trata_fecha, trata_observaciones, tbl_citas_cita_id, tbl_historialclinico_hist_id, tbl_auxiliares_aux_id)
-    VALUES (p_trata_nombre, p_trata_descripcion, p_trata_fecha, p_trata_observaciones, p_cita_id);
-END $$
+    INSERT INTO tbl_tratamientos_realizados (
+        trata_nombre, 
+        trata_descripcion, 
+        trata_fecha, 
+        trata_observaciones, 
+        tbl_citas_cita_id, 
+        tbl_historialclinico_hist_id, 
+        tbl_auxiliares_aux_id
+    )
+    VALUES (
+        p_trata_nombre, 
+        p_trata_descripcion, 
+        p_trata_fecha, 
+        p_trata_observaciones, 
+        p_trata_cita_id, 
+        p_trata_hist_id, 
+        p_trata_aux_id
+    );
+END//
 DELIMITER ;
 
 -- Leer todos los tratamientos realizados
-DELIMITER $$
-CREATE PROCEDURE spSelectTratamientoRealizado()
+DELIMITER //
+CREATE PROCEDURE spSelectTreatmentsPerformed()
 BEGIN
     SELECT * FROM tbl_tratamientos_realizados;
-END $$
+END//
 DELIMITER ;
 
 -- Actualizar un tratamiento realizado
-DELIMITER $$
-CREATE PROCEDURE spUpdateTratamientoRealizado(
+DELIMITER //
+CREATE PROCEDURE spUpdateTreatmentPerformed(
     IN p_trata_id INT, 
     IN p_trata_nombre VARCHAR(45), 
     IN p_trata_descripcion VARCHAR(200), 
     IN p_trata_fecha DATE, 
-    IN p_trata_observaciones TEXT
+    IN p_trata_observaciones TEXT,
+    IN p_trata_cita_id INT,
+    IN p_trata_hist_id INT,
+    IN p_trata_aux_id INT
 )
 BEGIN
     UPDATE tbl_tratamientos_realizados 
-    SET trata_nombre = p_trata_nombre, trata_descripcion = p_trata_descripcion, trata_fecha = p_trata_fecha, 
-    trata_observaciones = p_trata_observaciones
+    SET trata_nombre = p_trata_nombre, 
+        trata_descripcion = p_trata_descripcion, 
+        trata_fecha = p_trata_fecha, 
+        trata_observaciones = p_trata_observaciones,
+        tbl_citas_cita_id = p_trata_cita_id,
+        tbl_historialclinico_hist_id = p_trata_hist_id,
+        tbl_auxiliares_aux_id = p_trata_aux_id
     WHERE trata_id = p_trata_id;
-END $$
+END//
 DELIMITER ;
 
 -- Eliminar un tratamiento realizado
-DELIMITER $$
-CREATE PROCEDURE spDeleteTratamientoRealizado(IN p_trata_id INT)
+DELIMITER //
+CREATE PROCEDURE spDeleteTreatmentPerformed(IN p_trata_id INT)
 BEGIN
     DELETE FROM tbl_tratamientos_realizados WHERE trata_id = p_trata_id;
-END $$
+END//
 DELIMITER ;
