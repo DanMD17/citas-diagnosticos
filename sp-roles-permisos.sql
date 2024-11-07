@@ -1,7 +1,7 @@
---Procedimientos para la tabla Roles y permisos
----------------------------------------------------INSERTAR
+--Insertar un Rol y Permiso
+
 DELIMITER //
-CREATE PROCEDURE spInsertRole_Permission(
+CREATE PROCEDURE spInsertRolePermission(
     IN p_rol_id INT,
     IN p_permiso_id INT
 )
@@ -11,9 +11,10 @@ BEGIN
 END//
 DELIMITER ;
 
----------------------------------------------------DELETE
+--Eliminar un Rol y Permiso
+
 DELIMITER //
-CREATE PROCEDURE spDeleteRole_Permission(
+CREATE PROCEDURE spDeleteRolePermission(
     IN p_rol_id INT,
     IN p_permiso_id INT
 )
@@ -23,35 +24,9 @@ BEGIN
 END//
 DELIMITER ;
 
-------------------------------------------------SELECT PERMISSION by ROL 
+--Actualizar un Rol y Permiso
 DELIMITER //
-CREATE PROCEDURE spSelectPermisionByRol(
-    IN p_rol_id INT
-)
-BEGIN
-    SELECT tbl_permisos.per_id, tbl_permisos.per_nombre, tbl_permisos.per_descripcion
-    FROM tbl_rol_has_tbl_permisos
-    INNER JOIN tbl_permisos ON tbl_rol_has_tbl_permisos.tbl_permisos_per_id = tbl_permisos.per_id
-    WHERE tbl_rol_has_tbl_permisos.tbl_rol_rol_id = p_rol_id;
-END//
-DELIMITER ;
-
-------------------------------------------------SELECT ROLES by permission
-DELIMITER //
-CREATE PROCEDURE spSelectRolesByPermiso(
-    IN p_permiso_id INT
-)
-BEGIN
-    SELECT tbl_rol.rol_id, tbl_rol.rol_nombre, tbl_rol.rol_descripcion
-    FROM tbl_rol_has_tbl_permisos
-    INNER JOIN tbl_rol ON tbl_rol_has_tbl_permisos.tbl_rol_rol_id = tbl_rol.rol_id
-    WHERE tbl_rol_has_tbl_permisos.tbl_permisos_per_id = p_permiso_id;
-END//
-DELIMITER ;
-
------------------------------------------------------UPDATE 
-DELIMITER //
-CREATE PROCEDURE spUpdateRoles_Permission(
+CREATE PROCEDURE spUpdateRolePermission(
     IN old_rol_id INT,
     IN old_permiso_id INT,
     IN new_rol_id INT,
@@ -64,9 +39,9 @@ BEGIN
 END//
 DELIMITER ;
 
------------------------------------------------------SELECT_ALL
+--Mostrar Roles y Permisos
 DELIMITER //
-CREATE PROCEDURE spSelectRoles_Permission()
+CREATE PROCEDURE spSelectRolesPermissions()
 BEGIN
     SELECT 
 		r.rol_id AS rol_id,

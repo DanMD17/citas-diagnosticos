@@ -1,4 +1,5 @@
-------------------------- INSERTAR 
+--Insertar Permiso
+
 DELIMITER //
 CREATE PROCEDURE spInsertPermission(
     IN p_nombre VARCHAR(45),
@@ -10,7 +11,8 @@ BEGIN
 END//
 DELIMITER ;
 
-------------------------- UPDATE
+--Actualizar Permiso
+
 DELIMITER //
 CREATE PROCEDURE spUpdatePermission(
     IN p_id INT,
@@ -24,7 +26,8 @@ BEGIN
 END//
 DELIMITER ;
 
-------------------------- DELETE
+--Eliminar Permiso
+
 DELIMITER //
 CREATE PROCEDURE spDeletePermission(
     IN p_id INT
@@ -35,7 +38,8 @@ BEGIN
 END//
 DELIMITER ;
 
--------------------------------------SELECT
+--Mostrar Permisos
+
 DELIMITER //
 CREATE PROCEDURE spSelectPermission()
 BEGIN
@@ -44,19 +48,8 @@ BEGIN
 END//
 DELIMITER ;
 
--------------------------------------SELECT by ID
-DELIMITER //
-CREATE PROCEDURE spSelectPermissionById(
-    IN p_id INT
-)
-BEGIN
-    SELECT * 
-    FROM tbl_permisos 
-    WHERE per_id = p_id;
-END//
-DELIMITER ;
+--DDL Permiso
 
---------------------------------------------SELECT DDL
 DELIMITER //
 CREATE PROCEDURE spSelectPermissionDDL()
 BEGIN
