@@ -1,5 +1,5 @@
---Procedimientos para la tabla roles 
-------------------------- INSERTAR 
+--Insertar Rol 
+
 DELIMITER //
 CREATE PROCEDURE spInsertRole(
     IN p_nombre VARCHAR(45),
@@ -11,7 +11,7 @@ BEGIN
 END//
 DELIMITER ;
 
-----------------------------------------UPDATE
+--Actualizar Rol
 DELIMITER //
 CREATE PROCEDURE spUpdateRol(
     IN p_id INT,
@@ -25,7 +25,8 @@ BEGIN
 END//
 DELIMITER ;
 
--------------------------------------------DELETE
+--Eliminar Rol
+
 DELIMITER //
 CREATE PROCEDURE spDeleteRole(
     IN p_id INT
@@ -36,7 +37,8 @@ BEGIN
 END//
 DELIMITER ;
 
---------------------------------------------SELECT
+--Mostrar Roles
+
 DELIMITER //
 CREATE PROCEDURE spSelectRoles()
 BEGIN
@@ -45,20 +47,8 @@ BEGIN
 END//
 DELIMITER ;
 
---------------------------------------------SELECT by ID
-DELIMITER //
-CREATE PROCEDURE spSelectRolesById(
-    IN p_id INT
-)
-BEGIN
-    SELECT * 
-    FROM tbl_rol 
-    WHERE rol_id = p_id;
-END//
-DELIMITER ;
+--DDL Rol 
 
-
---------------------------------------------SELECT DDL
 DELIMITER //
 CREATE PROCEDURE spSelectRolesDDL()
 BEGIN
