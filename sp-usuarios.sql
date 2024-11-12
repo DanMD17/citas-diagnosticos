@@ -1,80 +1,53 @@
--- Insertar un nuevo usuario
+-- Guardar a User
 DELIMITER //
-CREATE PROCEDURE spInsertUser(
-    IN p_usu_correo VARCHAR(80),
-    IN p_usu_contrasena TEXT,
-    IN p_usu_estado VARCHAR(15),
-    IN p_usu_fecha_creacion DATE,
-    IN p_usu_empleado_emp_id INT,
-    IN p_usu_roles_rol_id INT
-)
-BEGIN
-    INSERT INTO tbl_usuarios (
-        usu_correo, 
-        usu_contrasena, 
-        usu_estado, 
-        usu_fecha_creacion, 
-        tbl_empleado_emp_id, 
-        tbl_roles_rol_id
-    ) 
-    VALUES (
-        p_usu_correo, 
-        p_usu_contrasena, 
-        p_usu_estado, 
-        p_usu_fecha_creacion, 
-        p_usu_empleado_emp_id, 
-        p_usu_roles_rol_id
-    );
-END //
+create procedure spInsertUser(IN p_mail VARCHAR(80),IN p_password TEXT,
+IN p_salt TEXT,IN p_state VARCHAR(15),IN p_date DATE,IN p_fkrol INT,IN p_fkemployee INT)
+begin
+	insert into tbl_usuario(usu_correo,usu_contrasena,usu_salt,usu_estado,usu_fecha_creacion,
+    tbl_rol_rol_id,tbl_empleado_emp_id) 
+    values(p_mail,p_password,p_salt,p_state,p_date,p_fkrol,p_fkemployee);
+end//
 DELIMITER ;
 
--- Actualizar un usuario
+-- Select User by email
 DELIMITER //
-CREATE PROCEDURE spUpdateUser(
-    IN p_usu_id INT,
-    IN p_usu_correo VARCHAR(80),
-    IN p_usu_contrasena TEXT,
-    IN p_usu_estado VARCHAR(15),
-    IN p_usu_fecha_creacion DATE,
-    IN p_usu_empleado_emp_id INT,
-    IN p_usu_roles_rol_id INT
-)
+CREATE PROCEDURE spSelectUserMail(IN p_mail VARCHAR(80))
 BEGIN
-    UPDATE tbl_usuarios
-    SET 
-        usu_correo = p_usu_correo,
-        usu_contrasena = p_usu_contrasena,
-        usu_estado = p_usu_estado,
-        usu_fecha_creacion = p_usu_fecha_creacion,
-        tbl_empleado_emp_id = p_usu_empleado_emp_id,
-        tbl_roles_rol_id = p_usu_roles_rol_id
-    WHERE usu_id = p_usu_id;
-END //
+	select usu_correo, usu_contrasena,usu_salt,usu_estado,tbl_rol.rol_nombre,tbl_permiso.per_id
+	from tbl_usuario
+    inner join tbl_rol
+    on tbl_rol.rol_id = tbl_usuario.tbl_rol_rol_id 
+    inner join tbl_rol_permiso
+    on tbl_rol.rol_id = tbl_rol_permiso.tbl_rol_rol_id
+    inner join tbl_permiso
+    on tbl_rol_permiso.tbl_permiso_per_id = tbl_permiso.per_id
+	where usu_correo = p_mail;
+END//
 DELIMITER ;
 
--- Listar todos los usuarios
+-- Show all Users
 DELIMITER //
-CREATE PROCEDURE spSelectUsers()
-BEGIN
-    SELECT 
-        usu_id, 
-        usu_correo, 
-        usu_estado, 
-        usu_fecha_creacion,
-        tbl_empleado_emp_id, 
-        tbl_roles_rol_id
-    FROM tbl_usuarios;
-END //
+create procedure spSelectUsers()
+begin
+	select usu_id,usu_correo,usu_contrasena,usu_salt,usu_estado,usu_fecha_creacion,
+    tbl_rol_rol_id,tbl_rol.rol_nombre,tbl_empleado_emp_id,tbl_empleado.emp_nombres,
+    tbl_empleado.emp_apellidos
+    from tbl_usuario
+    INNER JOIN tbl_rol
+	ON tbl_usuario.tbl_rol_rol_id = tbl_rol.rol_id
+	INNER JOIN tbl_empleado
+	ON tbl_usuario.tbl_empleado_emp_id = tbl_empleado.emp_id;
+end//
 DELIMITER ;
 
-
--- Eliminar un usuario
+-- Update a User
 DELIMITER //
-CREATE PROCEDURE spDeleteUser(
-    IN p_usu_id INT
-)
-BEGIN
-    DELETE FROM tbl_usuarios
-    WHERE usu_id = p_usu_id;
-END //
+create procedure spUpdateUser(IN p_id INT,IN p_correo VARCHAR(80),IN p_contrasena TEXT,
+IN p_salt TEXT,IN p_estado VARCHAR(15),IN p_fecha_creacion DATE,IN p_fkrol INT,IN p_fkempleado INT)
+begin
+	update tbl_usuario
+    set usu_correo=p_correo,usu_contrasena=p_contrasena,usu_salt=p_salt,usu_estado=p_estado,usu_fecha_creacion=p_fecha_creacion,
+    tbl_rol_rol_id=p_fkrol,tbl_empleado_emp_id=p_fkempleado
+    where usu_id = p_id;
+end//
 DELIMITER ;
