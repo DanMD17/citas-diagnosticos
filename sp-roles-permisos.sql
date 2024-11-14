@@ -1,58 +1,39 @@
---Insertar un Rol y Permiso
-
+-- Procedimiento para seleccionar todos los Permisos Roles
 DELIMITER //
-CREATE PROCEDURE spInsertRolePermission(
-    IN p_rol_id INT,
-    IN p_permiso_id INT
-)
+CREATE PROCEDURE spSelectPermisoRol()
 BEGIN
-    INSERT INTO tbl_rol_has_tbl_permisos (tbl_rol_rol_id, tbl_permisos_per_id) 
-    VALUES (p_rol_id, p_permiso_id);
+	select rol_permiso,tbl_rol_rol_id,tbl_rol.rol_nombre,tbl_permiso_per_id,
+    tbl_permiso.per_nombre,per_rol_fecha_asignacion
+    from tbl_rol_permiso
+    inner join tbl_rol
+    on tbl_rol.rol_id = tbl_rol_permiso.tbl_rol_rol_id
+    inner join tbl_permiso
+    on tbl_permiso.per_id = tbl_rol_permiso.tbl_permiso_per_id;
 END//
 DELIMITER ;
 
---Eliminar un Rol y Permiso
-
+-- Procedimiento para Insertar un Permiso Rol
 DELIMITER //
-CREATE PROCEDURE spDeleteRolePermission(
-    IN p_rol_id INT,
-    IN p_permiso_id INT
-)
+CREATE PROCEDURE spInsertPermisoRol(IN p_rol_id INT, p_permiso_id INT,IN p_date DATE)
 BEGIN
-    DELETE FROM tbl_rol_has_tbl_permisos 
-    WHERE tbl_rol_rol_id = p_rol_id AND tbl_permisos_per_id = p_permiso_id;
+    insert into tbl_rol_permiso(tbl_rol_rol_id,tbl_permiso_per_id,per_rol_fecha_asignacion) values(p_rol_id,p_permiso_id,p_date);
 END//
 DELIMITER ;
 
---Actualizar un Rol y Permiso
+-- Procedimiento para Actualizar un Permiso Rol
 DELIMITER //
-CREATE PROCEDURE spUpdateRolePermission(
-    IN old_rol_id INT,
-    IN old_permiso_id INT,
-    IN new_rol_id INT,
-    IN new_permiso_id INT
-)
-BEGIN
-    UPDATE tbl_rol_has_tbl_permisos
-    SET tbl_rol_rol_id = new_rol_id, tbl_permisos_per_id = new_permiso_id
-    WHERE tbl_rol_rol_id = old_rol_id AND tbl_permisos_per_id = old_permiso_id;
-END//
+create procedure spUpdatePermisoRol(IN p_rol_permiso INT, IN p_fkrol INT,IN p_fkpermiso INT,IN p_date DATE)
+begin
+	update tbl_rol_permiso
+    set tbl_rol_rol_id = p_fkrol, tbl_permiso_per_id = p_fkpermiso, per_rol_fecha_asignacion = p_date
+    where rol_permiso = p_rol_permiso;
+end//
 DELIMITER ;
 
---Mostrar Roles y Permisos
+-- Procedimiento para Eliminar un permiso rol
 DELIMITER //
-CREATE PROCEDURE spSelectRolesPermissions()
-BEGIN
-    SELECT 
-		r.rol_id AS rol_id,
-        r.rol_nombre AS rol_nombre,
-        p.per_id AS per_id,
-        p.per_nombre AS per_nombre
-    FROM 
-        tbl_rol_has_tbl_permisos rp
-    INNER JOIN 
-        tbl_rol r ON rp.tbl_rol_rol_id = r.rol_id
-    INNER JOIN 
-        tbl_permisos p ON rp.tbl_permisos_per_id = p.per_id;
-END
+create procedure spDeletePermisoRol(IN p_id INT)
+begin
+	delete from tbl_rol_permiso where rol_permiso = p_id;
+end//
 DELIMITER ;
