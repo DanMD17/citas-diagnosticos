@@ -6,7 +6,7 @@ CREATE PROCEDURE spInsertRole(
     IN p_descripcion VARCHAR(80)
 )
 BEGIN
-    INSERT INTO tbl_rol (rol_nombre, rol_descripcion) 
+    INSERT INTO tbl_roles (rol_nombre, rol_descripcion) 
     VALUES (p_nombre, p_descripcion);
 END//
 DELIMITER ;
@@ -19,7 +19,7 @@ CREATE PROCEDURE spUpdateRol(
     IN p_descripcion VARCHAR(80)
 )
 BEGIN
-    UPDATE tbl_rol 
+    UPDATE tbl_roles 
     SET rol_nombre = p_nombre, rol_descripcion = p_descripcion
     WHERE rol_id = p_id;
 END//
@@ -32,7 +32,7 @@ CREATE PROCEDURE spDeleteRole(
     IN p_id INT
 )
 BEGIN
-    DELETE FROM tbl_rol 
+    DELETE FROM tbl_roles 
     WHERE rol_id = p_id;
 END//
 DELIMITER ;
@@ -43,7 +43,7 @@ DELIMITER //
 CREATE PROCEDURE spSelectRoles()
 BEGIN
     SELECT * 
-    FROM tbl_rol;
+    FROM tbl_roles;
 END//
 DELIMITER ;
 
@@ -53,6 +53,6 @@ DELIMITER //
 CREATE PROCEDURE spSelectRolesDDL()
 BEGIN
     SELECT rol_id, rol_nombre 
-    FROM tbl_rol;
+    FROM tbl_roles;
 END//
 DELIMITER ;
