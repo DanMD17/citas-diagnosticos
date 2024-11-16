@@ -5,7 +5,7 @@ CREATE PROCEDURE spInsertDentist(
     IN p_emp_id INT
 )
 BEGIN
-    INSERT INTO tbl_odontologos (odo_especialidad, tbl_empleado_emp_id)
+    INSERT INTO tbl_odontologos (odo_especialidad, tbl_empleados_emp_id)
     VALUES (p_odo_especialidad, p_emp_id);
 END $$
 DELIMITER ;
@@ -14,7 +14,11 @@ DELIMITER ;
 DELIMITER $$
 CREATE PROCEDURE spSelectDentists()
 BEGIN
-    SELECT * FROM tbl_odontologos;
+    SELECT odo_id, odo_especialidad,
+    tbl_empleados_emp_id, tbl_empleados.emp_nombre
+    FROM tbl_odontologos
+    INNER JOIN tbl_empleados
+    ON tbl_odontologos.tbl_empleados_emp_id = tbl_empleados.emp_id;
 END $$
 DELIMITER ;
 
@@ -27,7 +31,7 @@ CREATE PROCEDURE spUpdateDentist(
 )
 BEGIN
     UPDATE tbl_odontologos 
-    SET odo_especialidad = p_odo_especialidad, tbl_empleado_emp_id = p_emp_id
+    SET odo_especialidad = p_odo_especialidad, tbl_empleados_emp_id = p_emp_id
     WHERE odo_id = p_odo_id;
 END $$
 DELIMITER ;

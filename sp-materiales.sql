@@ -46,13 +46,11 @@ DELIMITER ;
 DELIMITER //
 CREATE PROCEDURE spSelectMaterial()
 BEGIN
-    SELECT 
-        mate_id, 
-        mate_nombre, 
-        mate_descripcion, 
-        mate_cantidad, 
-        tbl_tratamientos_realizados_trata_id 
-    FROM tbl_materiales;
+    SELECT mate_id, mate_nombre, mate_descripcion, mate_cantidad,
+    tbl_tratamientos_realizados_trata_id, tbl_tratamientos_realizados.trata_nombre
+    FROM tbl_materiales
+    INNER JOIN tbl_tratamientos_realizados
+    ON tbl_materiales.tbl_tratamientos_realizados_trata_id = tbl_tratamientos_realizados.trata_id;
 END//
 DELIMITER ;
 

@@ -41,8 +41,11 @@ DELIMITER ;
 DELIMITER //
 CREATE PROCEDURE spSelectClinicalHistories()
 BEGIN
-    SELECT hist_id, tbl_pacientes_paci_id, hist_fecha_creacion, hist_descripcion_general
-    FROM tbl_historialclinico;
+    SELECT hist_id, hist_fecha_creacion, hist_descripcion_general,
+    tbl_pacientes_paci_id, tbl_pacientes.paci_nombre
+    FROM tbl_historialclinico
+    INNER JOIN tbl_pacientes
+    ON tbl_historialclinico.tbl_pacientes_paci_id = tbl_pacientes.paci_id;
 END//
 DELIMITER ;
 

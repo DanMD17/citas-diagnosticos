@@ -35,8 +35,19 @@ DELIMITER ;
 DELIMITER //
 CREATE PROCEDURE spSelectTreatmentsPerformed()
 BEGIN
-    SELECT * FROM tbl_tratamientos_realizados;
-END//
+    SELECT 
+        trata_id, trata_nombre, trata_descripcion, trata_fecha, trata_observaciones,
+        tbl_citas_cita_id, tbl_citas.cita_estado,
+        tbl_historialclinico_hist_id, tbl_historialclinico.hist_descripcion_general,
+        tbl_auxiliares_aux_id, tbl_auxiliares.aux_funcion
+        FROM tbl_tratamientos_realizados 
+        INNER JOIN tbl_citas 
+        ON tbl_tratamientos_realizados.tbl_citas_cita_id = tbl_citas.cita_id
+        INNER JOIN tbl_historialclinico 
+        ON tbl_tratamientos_realizados.tbl_historialclinico_hist_id = tbl_historialclinico.hist_id
+        INNER JOIN tbl_auxiliares 
+        ON tbl_tratamientos_realizados.tbl_auxiliares_aux_id = tbl_auxiliares.aux_id;
+end//
 DELIMITER ;
 
 -- Actualizar un tratamiento realizado

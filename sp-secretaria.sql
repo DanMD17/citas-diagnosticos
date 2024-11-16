@@ -7,7 +7,7 @@ CREATE PROCEDURE spInsertSecretary(
 )
 BEGIN
     INSERT INTO tbl_secretarias (
-        tbl_empleado_emp_id, 
+        tbl_empleados_emp_id, 
         sec_funcion, 
         sec_anios_experiencia
     )
@@ -23,7 +23,11 @@ DELIMITER ;
 DELIMITER //
 CREATE PROCEDURE spSelectSecretaries()
 BEGIN
-    SELECT * FROM tbl_secretarias;
+    SELECT id_sec, sec_funcion, sec_anios_experiencia,
+    tbl_empleados_emp_id, tbl_empleados.emp_nombre
+    FROM tbl_secretarias
+    INNER JOIN tbl_empleados
+    ON tbl_secretarias.tbl_empleados_emp_id = tbl_empleados.emp_id;
 END//
 DELIMITER ;
 
@@ -39,7 +43,7 @@ BEGIN
     UPDATE tbl_secretarias 
     SET sec_funcion = p_sec_funcion, 
         sec_anios_experiencia = p_sec_anios_experiencia,
-        tbl_empleado_emp_id = p_emp_id
+        tbl_empleados_emp_id = p_emp_id
     WHERE id_sec = p_sec_id;
 END//
 DELIMITER ;
