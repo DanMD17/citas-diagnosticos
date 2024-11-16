@@ -29,8 +29,14 @@ DELIMITER ;
 DELIMITER //
 CREATE PROCEDURE spSelectQuotes()
 BEGIN
-    SELECT * 
-    FROM tbl_citas;
+    SELECT cita_id, cita_fecha, cita_hora, cita_estado,
+    tbl_pacientes_paci_id, tbl_pacientes.paci_nombre,
+    tbl_odontologos_odo_id, tbl_odontologos.odo_especialidad
+    FROM tbl_citas
+    INNER JOIN tbl_pacientes
+    ON tbl_citas.tbl_pacientes_paci_id = tbl_pacientes.paci_id
+    INNER JOIN tbl_odontologos
+    ON tbl_citas.tbl_odontologos_odo_id = tbl_odontologos.odo_id;
 END//
 DELIMITER ;
 

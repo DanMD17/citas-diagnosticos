@@ -7,7 +7,7 @@ CREATE PROCEDURE spInsertAssistant(
 )
 BEGIN
     INSERT INTO tbl_auxiliares (
-        tbl_empleado_emp_id, 
+        tbl_empleados_emp_id, 
         aux_funcion, 
         aux_nivel_educativo
     ) 
@@ -21,11 +21,14 @@ DELIMITER ;
 
 -- Leer todos los auxiliares
 DELIMITER //
-CREATE PROCEDURE spSelectAssistants()
-BEGIN
-    SELECT * 
-    FROM tbl_auxiliares;
-END//
+create procedure spSelectAssistants()
+begin
+	select aux_id, aux_funcion, aux_nivel_educativo,
+    tbl_empleados_emp_id, tbl_empleados.emp_nombre
+    FROM tbl_auxiliares
+    INNER JOIN tbl_empleados
+    ON tbl_auxiliares.tbl_empleados_emp_id = tbl_empleados.emp_id;
+end//
 DELIMITER ;
 
 -- Actualizar un auxiliar
@@ -40,7 +43,7 @@ BEGIN
     UPDATE tbl_auxiliares 
     SET aux_funcion = p_aux_funcion, 
         aux_nivel_educativo = p_aux_nivel_educativo,
-        tbl_empleado_emp_id = p_emp_id
+        tbl_empleados_emp_id = p_emp_id
     WHERE aux_id = p_aux_id;
 END//
 DELIMITER ;
