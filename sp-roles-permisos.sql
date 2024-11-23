@@ -6,7 +6,7 @@ BEGIN
     tbl_roles_rol_id,tbl_roles.rol_nombre,tbl_permisos_id_per,
     tbl_permisos.per_nombre,per_rol_fecha_asignacion
     from tbl_roles_permisos
-    inner join tbl_roles
+    inner join tbl_roles 
     on tbl_roles.rol_id = tbl_roles_permisos.tbl_roles_rol_id
     inner join tbl_permisos
     on tbl_permisos.per_id = tbl_roles_permisos.tbl_permisos_id_per;
