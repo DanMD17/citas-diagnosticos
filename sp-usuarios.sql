@@ -10,20 +10,23 @@ end//
 DELIMITER ;
 
 -- Select User by email
+-------------------------------------------------------------------------------
 DELIMITER //
 CREATE PROCEDURE spSelectUserMail(IN p_mail VARCHAR(80))
 BEGIN
-	select usu_correo, usu_contrasena,usu_salt,usu_estado,tbl_roles.rol_nombre,tbl_permisos.per_id
+	select usu_correo, usu_contrasena,usu_salt,usu_estado,tbl_roles.rol_id,tbl_roles.rol_nombre,
+    tbl_roles.rol_descripcion,tbl_permisos.per_id,tbl_permisos.per_nombre,tbl_permisos.per_descripcion
 	from tbl_usuarios
     inner join tbl_roles
     on tbl_roles.rol_id = tbl_usuarios.tbl_roles_rol_id 
     inner join tbl_roles_permisos
     on tbl_roles.rol_id = tbl_roles_permisos.tbl_roles_rol_id
     inner join tbl_permisos
-    on tbl_roles_permisos.tbl_permisos_per_id = tbl_permisos.per_id
+    on tbl_roles_permisos.tbl_permisos_id_per = tbl_permisos.per_id
 	where usu_correo = p_mail;
 END//
-DELIMITER ;
+DELIMITER //
+
 
 -- Show all Users
 DELIMITER //
