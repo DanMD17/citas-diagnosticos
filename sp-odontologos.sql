@@ -48,7 +48,9 @@ DELIMITER ;
 DELIMITER $$
 CREATE PROCEDURE spSelectDentistsDDL()
 BEGIN
-    SELECT odo_id, odo_especialidad
-    FROM tbl_odontologos;
+    SELECT odo_id, tbl_empleados.emp_nombre
+    FROM tbl_odontologos
+    INNER JOIN tbl_empleados
+    ON tbl_odontologos.tbl_empleados_emp_id = tbl_empleados.emp_id;
 END $$
 DELIMITER ;

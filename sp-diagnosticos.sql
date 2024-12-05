@@ -50,14 +50,22 @@ DELIMITER ;
 DELIMITER //
 CREATE PROCEDURE spSelectDiagnosis()
 BEGIN
-    SELECT diag_id, diag_descripcion, diag_fecha, diag_observaciones,
-     tbl_citas_cita_id, tbl_citas.cita_estado,
-     tbl_historialclinico_hist_id, tbl_historialclinico.hist_descripcion_general
+    SELECT diag_id,
+    diag_descripcion,
+    diag_fecha, 
+    diag_observaciones,
+     tbl_citas_cita_id, 
+     tbl_citas.cita_fecha,
+     tbl_historialclinico_hist_id,
+     tbl_historialclinico.hist_descripcion_general,
+     tbl_pacientes.paci_nombre AS paciente_nombre
      FROM tbl_diagnosticos
      INNER JOIN tbl_citas
      ON tbl_diagnosticos.tbl_citas_cita_id = tbl_citas.cita_id
      INNER JOIN tbl_historialclinico
-     ON tbl_diagnosticos.tbl_historialclinico_hist_id = tbl_historialclinico.hist_id; 
+     ON tbl_diagnosticos.tbl_historialclinico_hist_id = tbl_historialclinico.hist_id
+     INNER JOIN tbl_pacientes
+     ON tbl_citas.tbl_pacientes_paci_id = tbl_pacientes.paci_id; 
 END//
 DELIMITER ;
 

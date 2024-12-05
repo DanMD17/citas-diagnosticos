@@ -63,7 +63,9 @@ DELIMITER ;
 DELIMITER //
 CREATE PROCEDURE spSelectAssistantsDDL()
 BEGIN
-    SELECT aux_id, aux_funcion
-    FROM tbl_auxiliares;
+    select aux_id, tbl_empleados.emp_nombre
+    FROM tbl_auxiliares
+    INNER JOIN tbl_empleados
+    ON tbl_auxiliares.tbl_empleados_emp_id = tbl_empleados.emp_id;
 END//
 DELIMITER ;

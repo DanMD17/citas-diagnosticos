@@ -36,19 +36,34 @@ DELIMITER //
 CREATE PROCEDURE spSelectTreatmentsPerformed()
 BEGIN
     SELECT 
-        trata_id, trata_nombre, trata_descripcion, trata_fecha, trata_observaciones,
-        tbl_citas_cita_id, tbl_citas.cita_estado,
-        tbl_historialclinico_hist_id, tbl_historialclinico.hist_descripcion_general,
-        tbl_auxiliares_aux_id, tbl_auxiliares.aux_funcion
-        FROM tbl_tratamientos_realizados 
-        INNER JOIN tbl_citas 
+        trata_id, 
+        trata_nombre, 
+        trata_descripcion, 
+        trata_fecha, 
+        trata_observaciones,
+        tbl_citas_cita_id, 
+        tbl_citas.cita_estado,
+        tbl_historialclinico_hist_id, 
+        tbl_historialclinico.hist_descripcion_general,
+        tbl_auxiliares_aux_id, 
+        tbl_empleados.emp_nombre AS auxiliar_nombre,
+        tbl_pacientes.paci_nombre AS paciente_nombre -- Incluyendo el nombre del paciente
+    FROM 
+        tbl_tratamientos_realizados
+    INNER JOIN tbl_citas 
         ON tbl_tratamientos_realizados.tbl_citas_cita_id = tbl_citas.cita_id
-        INNER JOIN tbl_historialclinico 
+    INNER JOIN tbl_historialclinico 
         ON tbl_tratamientos_realizados.tbl_historialclinico_hist_id = tbl_historialclinico.hist_id
-        INNER JOIN tbl_auxiliares 
-        ON tbl_tratamientos_realizados.tbl_auxiliares_aux_id = tbl_auxiliares.aux_id;
-end//
+    INNER JOIN tbl_auxiliares 
+        ON tbl_tratamientos_realizados.tbl_auxiliares_aux_id = tbl_auxiliares.aux_id
+    INNER JOIN tbl_empleados 
+        ON tbl_auxiliares.tbl_empleados_emp_id = tbl_empleados.emp_id
+    INNER JOIN tbl_pacientes -- Nueva unión para obtener el nombre del paciente
+        ON tbl_citas.tbl_pacientes_paci_id = tbl_pacientes.paci_id;
+END //
 DELIMITER ;
+
+
 
 -- Actualizar un tratamiento realizado
 DELIMITER //
