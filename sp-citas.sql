@@ -31,12 +31,15 @@ CREATE PROCEDURE spSelectQuotes()
 BEGIN
     SELECT cita_id, cita_fecha, cita_hora, cita_estado,
     tbl_pacientes_paci_id, tbl_pacientes.paci_nombre,
-    tbl_odontologos_odo_id, tbl_odontologos.odo_especialidad
+    tbl_odontologos_odo_id, tbl_odontologos.odo_especialidad,
+    tbl_empleados.emp_nombre AS nombre_odo 
     FROM tbl_citas
     INNER JOIN tbl_pacientes
     ON tbl_citas.tbl_pacientes_paci_id = tbl_pacientes.paci_id
     INNER JOIN tbl_odontologos
-    ON tbl_citas.tbl_odontologos_odo_id = tbl_odontologos.odo_id;
+    ON tbl_citas.tbl_odontologos_odo_id = tbl_odontologos.odo_id
+    INNER JOIN tbl_empleados
+    ON tbl_odontologos.tbl_empleados_emp_id = tbl_empleados.emp_id;
 END//
 DELIMITER ;
 
@@ -74,9 +77,22 @@ DELIMITER ;
 
 -- Drop Down List
 DELIMITER //
+
 CREATE PROCEDURE spSelectQuotesDDL()
 BEGIN
-    SELECT cita_id, cita_estado
-    FROM tbl_citas;
-END//
+    SELECT  
+        tbl_citas.cita_id,  
+        tbl_citas.cita_fecha,  
+        tbl_pacientes.paci_nombre,
+        CONCAT(tbl_pacientes.paci_nombre, ' - ', DATE_FORMAT(tbl_citas.cita_fecha, '%d/%m/%Y')) AS nombre_y_fecha
+    FROM  
+        tbl_citas
+    INNER JOIN  
+        tbl_pacientes  
+    ON  
+        tbl_citas.tbl_pacientes_paci_id = tbl_pacientes.paci_id;
+END //
 DELIMITER ;
+
+
+
