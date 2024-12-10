@@ -94,5 +94,46 @@ BEGIN
 END //
 DELIMITER ;
 
+-- Cantidad de citas por mes
+DELIMITER $$
 
+CREATE PROCEDURE spSelectQuotesPerMonth()
+BEGIN
+    SELECT 
+        DATE_FORMAT(cita_fecha, '%Y-%m') AS mes,
+        COUNT(*) AS total_citas
+    FROM 
+        tbl_citas
+    GROUP BY 
+        DATE_FORMAT(cita_fecha, '%Y-%m')
+    ORDER BY 
+        mes;
+END$$
 
+DELIMITER ;
+
+-- Cuenta cuántas citas existen
+
+DELIMITER //
+CREATE PROCEDURE spSelectCountQuotes(OUT total_citas INT)
+BEGIN
+    SELECT COUNT(cita_id) INTO total_citas
+    FROM tbl_citas;
+END//
+DELIMITER ;
+
+-- Cuenta la cantidad de citas por odontólogo
+DELIMITER //
+CREATE PROCEDURE spCountQuoteDentists()
+BEGIN
+    SELECT 
+        CONCAT(e.emp_nombre, ' ', e.emp_apellidos) AS NombreOdontologo,
+        COUNT(c.cita_id) AS TotalCitas
+    FROM 
+        tbl_odontologos o
+    INNER JOIN tbl_citas c ON o.odo_id = c.tbl_odontologos_odo_id
+    INNER JOIN tbl_empleados e ON o.tbl_empleados_emp_id = e.emp_id
+    GROUP BY 
+        e.emp_nombre, e.emp_apellidos;
+END//
+DELIMITER ;

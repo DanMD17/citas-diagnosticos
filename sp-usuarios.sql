@@ -54,3 +54,30 @@ begin
     where usu_id = p_id;
 end//
 DELIMITER ;
+
+-- Cantidad de usuarios por rol.
+
+DELIMITER $$
+
+CREATE PROCEDURE spSelectUsersPerRol()
+BEGIN
+    SELECT 
+        r.rol_nombre,
+        COUNT(u.tbl_roles_rol_id) AS total_usuarios
+    FROM 
+        tbl_usuarios u
+    INNER JOIN tbl_roles r ON u.tbl_roles_rol_id = r.rol_id
+    GROUP BY 
+        r.rol_nombre;
+END $$
+
+DELIMITER ;
+
+-- Cuenta cuántos usuarios existen
+DELIMITER //
+CREATE PROCEDURE spSelectCountUsers(OUT total_usuarios INT)
+BEGIN
+    SELECT COUNT(usu_id) INTO total_usuarios
+    FROM tbl_usuarios;
+END//
+DELIMITER ;
