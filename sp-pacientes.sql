@@ -71,3 +71,13 @@ BEGIN
     FROM tbl_pacientes;
 END $$
 DELIMITER ;
+
+-- Cuenta cuántos pacientes existen
+
+DELIMITER //
+CREATE PROCEDURE spSelectCountPatients(OUT total_pacientes INT)
+BEGIN
+    SELECT COUNT(paci_id) INTO total_pacientes
+    FROM tbl_pacientes;
+END//
+DELIMITER ;

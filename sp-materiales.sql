@@ -64,3 +64,13 @@ BEGIN
     WHERE mate_id = p_mate_id;
 END//
 DELIMITER ;
+
+-- Cuenta cuántos materiales existen
+
+DELIMITER //
+CREATE PROCEDURE spSelectCountMaterials(OUT total_materiales INT)
+BEGIN
+    SELECT COUNT(mate_id) INTO total_materiales
+    FROM tbl_materiales;
+END//
+DELIMITER ;
