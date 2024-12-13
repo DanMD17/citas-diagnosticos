@@ -102,8 +102,15 @@ DELIMITER ;
 DELIMITER //
 CREATE PROCEDURE spSelectTreatmentsDDL()
 BEGIN
-    SELECT trata_id, trata_nombre
-    FROM tbl_tratamientos_realizados;
+    SELECT 
+        trata_id, 
+        CONCAT(trata_nombre, ' - ', DATE_FORMAT(trata_fecha, '%Y-%m-%d'), ' - ', tbl_pacientes.paci_nombre) AS trata_detalle
+    FROM 
+        tbl_tratamientos_realizados
+    INNER JOIN tbl_citas 
+        ON tbl_tratamientos_realizados.tbl_citas_cita_id = tbl_citas.cita_id
+    INNER JOIN tbl_pacientes 
+        ON tbl_citas.tbl_pacientes_paci_id = tbl_pacientes.paci_id;
 END//
 DELIMITER ;
 
