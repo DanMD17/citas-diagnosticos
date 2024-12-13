@@ -77,7 +77,6 @@ DELIMITER ;
 
 -- Drop Down List
 DELIMITER //
-
 CREATE PROCEDURE spSelectQuotesDDL()
 BEGIN
     SELECT  
